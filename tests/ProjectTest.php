@@ -14,6 +14,28 @@ class ProjectTest extends TestCase
 	{
 		$this->project = new Project;
 	}
+
+	public function dataProviderAttributtes()
+	{
+		return [
+			["id"],
+			["name"]
+		];
+	}
+	
+	/**
+	 * Test project attributes is empty by default
+	 *
+	 * @dataProvider dataProviderAttributtes
+	 * 
+	 * @return void
+	 */
+	public function testProjectAttributesIsEmptyByDefault($name)
+	{
+
+		$this->assertEquals('', $this->project->$name);
+
+	}
 	
 }
 
