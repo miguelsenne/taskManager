@@ -1,0 +1,22 @@
+{
+    "name": "miguelsenne/task-manager",
+    "description": "Task manager SDK",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Miguel Senne",
+            "email": "miguelsennejunior@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^7.5",
+        "mockery/mockery": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "miguelsenne\\TaskManager\\Models\\": "src/Models",
+            "miguelsenne\\Tests\\": "tests/"
+        }
+    }
+}
