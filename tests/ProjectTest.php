@@ -36,6 +36,24 @@ class ProjectTest extends TestCase
 		$this->assertEquals('', $this->project->$name);
 
 	}
+
+	public function testProjectStoreItem()
+	{
+
+		$this->project->store('Estudos de PHP');
+		
+		$this->assertCount(1, $this->project->projects);
+	
+	}
+
+	public function testProjectStoreOnlyWords()
+	{
+
+		$this->project->store('Estudos de PHP 7');
+
+		$this->assertEquals('Estudos de PHP', $this->project->projects[0]);
+
+	}
 	
 }
 
