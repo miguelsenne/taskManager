@@ -18,8 +18,7 @@ class ProjectTest extends TestCase
 	public function dataProviderAttributtes()
 	{
 		return [
-			["id"],
-			["name"]
+			["projects"]
 		];
 	}
 	
@@ -33,7 +32,7 @@ class ProjectTest extends TestCase
 	public function testProjectAttributesIsEmptyByDefault($name)
 	{
 
-		$this->assertEquals('', $this->project->$name);
+		$this->assertEmpty($this->project->$name);
 
 	}
 
