@@ -51,8 +51,14 @@ class ProjectTest extends TestCase
 
 		$this->project->store('Estudos de PHP 7');
 
-		$this->assertEquals('Estudos de PHP', $this->project->projects[0]);
+		$this->assertEquals('Estudos de PHP', $this->project->projects[0]['name']);
 
+	}
+
+	public function testProjectStoreGenerateNewIdOnStore()
+	{
+		$this->project->store('Estudos de PHP');
+		$this->assertArrayHasKey('id', $this->project->projects[0]);
 	}
 	
 }

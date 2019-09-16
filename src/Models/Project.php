@@ -1,6 +1,7 @@
 <?php  
 
 namespace miguelsenne\TaskManager\Models;
+use Sinergi\Token\StringGenerator;
 
 class Project {
 
@@ -32,10 +33,23 @@ class Project {
 		
 		$name = preg_replace("/[0-9\s]+$/", null, $name);
 		
-		$this->projects[] = $name;
+		$this->projects[] = [
+			"id" => $this->generateID(),
+			"name" => $name
+		];
 
 		return "Adicionado com sucesso";
 		
+	}
+
+	/**
+	 * Generate an ID
+	 * 
+	 * @return string the ID
+	 */
+	public function generateID()
+	{
+		return StringGenerator::randomId();
 	}
 }
 
