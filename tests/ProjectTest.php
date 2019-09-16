@@ -60,6 +60,14 @@ class ProjectTest extends TestCase
 		$this->project->store('Estudos de PHP');
 		$this->assertArrayHasKey('id', $this->project->projects[0]);
 	}
+
+	public function testProjectDelete()
+	{
+		$project = $this->project->store('Estudos de PHP');
+		$projects = $this->project->delete($project['id']);
+
+		$this->assertCount(0, $projects);
+	}
 	
 }
 

@@ -30,16 +30,12 @@ class Project {
 	 */
 	public function store(string $name)
 	{
-		
 		$name = preg_replace("/[0-9\s]+$/", null, $name);
 		
-		$this->projects[] = [
+		return $this->projects[] = [
 			"id" => $this->generateID(),
 			"name" => $name
-		];
-
-		return "Adicionado com sucesso";
-		
+		];	
 	}
 
 	/**
@@ -51,6 +47,26 @@ class Project {
 	{
 		return StringGenerator::randomId();
 	}
+
+	/**
+	 * delete an item from projects
+	 * 
+	 * @param string $id the ID
+	 * @return array projects
+	 */
+	public function delete(string $id)
+	{
+		$projects = $this->projects;
+
+		foreach($projects as $key => $value) {
+			if($projects[$key]['id'] == $id) {
+				unset($projects[$key]);
+			}
+		}
+
+		return $projects;
+	}
+
 }
 
 ?>
