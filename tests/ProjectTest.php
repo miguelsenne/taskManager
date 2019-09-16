@@ -8,7 +8,7 @@ use miguelsenne\TaskManager\Models\Project;
 class ProjectTest extends TestCase
 {
 
-	protected static $project;
+	protected $project;
 
 	public function setUp(): void
 	{
