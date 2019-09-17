@@ -46,13 +46,36 @@ class Project {
 	{
 		$projects = $this->projects;
 
-		foreach($projects as $key => $value) {
-			if($projects[$key]['id'] == $id) {
-				unset($projects[$key]);
-			}
-		}
+		$key = array_search($id, array_column($projects, 'id'));
 
-		return $projects;
+		unset($this->projects[$key]);
+
+		return $this->projects;
+	}
+
+	/**
+	 * Find an project by ID
+	 * 
+	 * @param string $id the ID
+	 * @return array selected project
+	 */
+	public function find(string $id)
+	{
+		$projects = $this->projects;
+
+		$key = array_search($id, array_column($projects, 'id'));
+		
+		return ($key !== false) ? $projects[$key] : [];
+	}
+
+	/**
+	 * Reset items in array
+	 * 
+	 * @return array an empty array
+	 */
+	public function reset()
+	{
+		$this->projects = [];
 	}
 
 }
