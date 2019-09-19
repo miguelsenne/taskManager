@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 namespace miguelsenne\Tests;
 
@@ -9,124 +9,120 @@ use Faker\Factory;
 class StorageTest extends TestCase
 {
 
-	public function tearDown(): void
-	{
-		Storage::reset();
-	}
+    public function tearDown(): void
+    {
+        Storage::reset();
+    }
 
-	public function testIfDataIsEmpty()
-	{
-		$this->assertCount(0, Storage::$data);
-	}
+    public function testIfDataIsEmpty()
+    {
+        $this->assertCount(0, Storage::$data);
+    }
 
-	public function testIfItemHasBeenStored()
-	{
-		$item = Storage::store('foo', ['bar' => 'foo']);
+    public function testIfItemHasBeenStored()
+    {
+        $item = Storage::store('foo', ['bar' => 'foo']);
 
-		$this->assertEquals('foo', $item['bar']);
+        $this->assertEquals('foo', $item['bar']);
 
-		$this->assertCount(1, Storage::$data['foo']);
-	}
-	
-	public function testIfHasBeenStoredMultipleItems()
-	{
-		for($i = 0;$i < 4;$i++) {
-			Storage::store('foo', ['bar' => 'foo']);
-		}
+        $this->assertCount(1, Storage::$data['foo']);
+    }
 
-		$this->assertCount(4, Storage::$data['foo']);
-	}
+    public function testIfHasBeenStoredMultipleItems()
+    {
+        for ($i = 0; $i < 4; $i++) {
+            Storage::store('foo', ['bar' => 'foo']);
+        }
 
-	public function testIfHasBeenNotStoredWithAnyParamters()
-	{
-		$this->expectException("ArgumentCountError");
+        $this->assertCount(4, Storage::$data['foo']);
+    }
 
-		Storage::store();
-	}
+    public function testIfHasBeenNotStoredWithAnyParamters()
+    {
+        $this->expectException("ArgumentCountError");
 
-	public function testIfNotFoundAnCollectionWhenOnDelete()
-	{
-		$this->expectException('Exception');
+        Storage::store();
+    }
 
-		$this->expectExceptionMessage('Collection not found');
+    public function testIfNotFoundAnCollectionWhenOnDelete()
+    {
+        $this->expectException('Exception');
 
-		Storage::delete('bar', Storage::generateID());
-	}
+        $this->expectExceptionMessage('Collection not found');
 
-	public function testIfItemHasBeenDeleted()
-	{
-		for($i = 0; $i < 10;$i++) {
-			$item = Storage::store('foo', ['bar' => 'foo']);
-		}
-		
-		Storage::delete('foo', $item['id']);
+        Storage::delete('bar', Storage::generateID());
+    }
 
-		$this->assertCount(9, Storage::$data['foo']);
-	}
+    public function testIfItemHasBeenDeleted()
+    {
+        for ($i = 0; $i < 10; $i++) {
+            $item = Storage::store('foo', ['bar' => 'foo']);
+        }
 
-	public function testIfHasBeenFounded()
-	{
-		$faker = Factory::create();
-		
-		Storage::store('persons', ['name' => 'Miguel Senne']);
+        Storage::delete('foo', $item['id']);
 
-		for($i = 0; $i < 10;$i++){
-			$item = Storage::store('persons', ['name' => $faker->name]);
-		}
-		
-		$search = Storage::find('persons', 'name', 'Miguel Senne');
+        $this->assertCount(9, Storage::$data['foo']);
+    }
 
-		$this->assertArraySubset(['name' => 'Miguel Senne'], $search);		
+    public function testIfHasBeenFounded()
+    {
+        $faker = Factory::create();
 
-		$find_item = Storage::find('persons', 'name', $item['name']);
+        Storage::store('persons', ['name' => 'Miguel Senne']);
 
-		$this->assertArraySubset(['name' => $item['name']], $find_item);
-	}
+        for ($i = 0; $i < 10; $i++) {
+            $item = Storage::store('persons', ['name' => $faker->name]);
+        }
 
-	public function testSeeAnEmptyArrayWhenNotFound()
-	{
-		Storage::store('persons', ['bar' => 'foo']);
+        $search = Storage::find('persons', 'name', 'Miguel Senne');
 
-		$search = Storage::find('persons', 'name', 'miguel');
+        $this->assertArraySubset(['name' => 'Miguel Senne'], $search);
 
-		$this->assertEmpty($search);
-	}
+        $find_item = Storage::find('persons', 'name', $item['name']);
 
-	public function testIfNotFoundAnCollectionWhenOnFind()
-	{
-		$this->expectException('Exception');
+        $this->assertArraySubset(['name' => $item['name']], $find_item);
+    }
 
-		$this->expectExceptionMessage('Collection not found');
+    public function testSeeAnEmptyArrayWhenNotFound()
+    {
+        Storage::store('persons', ['bar' => 'foo']);
 
-		Storage::find('bar', 'name', 'John Doe');
-	}
+        $search = Storage::find('persons', 'name', 'miguel');
 
-	public function testIfGenerateIdIsUniq()
-	{
-		for($i = 0; $i < 100;$i++)
-		{
-			$hash[] = Storage::generateID(); 
-		}
+        $this->assertEmpty($search);
+    }
 
-		$this->assertEquals(1, array_count_values($hash)[$hash[10]]);
-		$this->assertEquals(1, array_count_values($hash)[$hash[20]]);
-		$this->assertEquals(1, array_count_values($hash)[$hash[5]]);
-	}
+    public function testIfNotFoundAnCollectionWhenOnFind()
+    {
+        $this->expectException('Exception');
 
-	public function testIfDataReturnAnEmptyArrayOnReset()
-	{
-		$faker = Factory::create();
+        $this->expectExceptionMessage('Collection not found');
 
-		for($i = 0; $i < 5;$i++){
-			Storage::store('items', ['name' => $faker->name]);
-		}
+        Storage::find('bar', 'name', 'John Doe');
+    }
 
-		Storage::reset();
-		
-		$this->assertIsArray(Storage::$data);
-		$this->assertEmpty(Storage::$data);
-	}
+    public function testIfGenerateIdIsUniq()
+    {
+        for ($i = 0; $i < 100; $i++) {
+            $hash[] = Storage::generateID();
+        }
 
+        $this->assertEquals(1, array_count_values($hash)[$hash[10]]);
+        $this->assertEquals(1, array_count_values($hash)[$hash[20]]);
+        $this->assertEquals(1, array_count_values($hash)[$hash[5]]);
+    }
+
+    public function testIfDataReturnAnEmptyArrayOnReset()
+    {
+        $faker = Factory::create();
+
+        for ($i = 0; $i < 5; $i++) {
+            Storage::store('items', ['name' => $faker->name]);
+        }
+
+        Storage::reset();
+
+        $this->assertIsArray(Storage::$data);
+        $this->assertEmpty(Storage::$data);
+    }
 }
-
-?>
