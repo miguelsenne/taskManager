@@ -3,16 +3,10 @@
 namespace miguelsenne\TaskManager\Models;
 
 use Sinergi\Token\StringGenerator;
+use miguelsenne\TaskManager\Database\Storage;
 
 class Project
 {
-
-    /**
-     * Armazenamento de projetos
-     * @var array
-     */
-    public $projects = [];
-
     /**
      * Store an project
      * @param  string $name project name
@@ -22,10 +16,9 @@ class Project
     {
         $name = preg_replace("/[0-9\s]+$/", null, $name);
 
-        return $this->projects[] = [
-            "id" => $this->generateID(),
+        return Storage::store('projects', [
             "name" => $name
-        ];
+        ]);
     }
 
     /**
@@ -46,13 +39,9 @@ class Project
      */
     public function delete(string $id)
     {
-        $projects = $this->projects;
+        Storage::delete('projects', $id);
 
-        $key = array_search($id, array_column($projects, 'id'));
-
-        unset($this->projects[$key]);
-
-        return $this->projects;
+        return Storage::$data['projects'];
     }
 
     /**
@@ -63,11 +52,7 @@ class Project
      */
     public function find(string $id)
     {
-        $projects = $this->projects;
-
-        $key = array_search($id, array_column($projects, 'id'));
-
-        return ($key !== false) ? $projects[$key] : [];
+        return Storage::find('projects', 'id', $id);
     }
 
     /**
@@ -77,6 +62,6 @@ class Project
      */
     public function reset()
     {
-        $this->projects = [];
+        Storage::$data['projects'] = [];
     }
 }

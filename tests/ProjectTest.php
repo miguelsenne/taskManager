@@ -4,6 +4,7 @@ namespace miguelsenne\Tests;
 
 use PHPUnit\Framework\TestCase;
 use miguelsenne\TaskManager\Models\Project;
+use miguelsenne\TaskManager\Database\Storage;
 
 class ProjectTest extends TestCase
 {
@@ -22,34 +23,15 @@ class ProjectTest extends TestCase
         $this->project->reset();
     }
 
-    public function dataProviderAttributtes()
-    {
-        return [
-            ["projects"]
-        ];
-    }
-
-    /**
-     * Test project attributes is empty by default
-     *
-     * @dataProvider dataProviderAttributtes
-     *
-     * @return void
-     */
-    public function testProjectAttributesIsEmptyByDefault($name)
-    {
-        $this->project->reset();
-
-        $this->assertEmpty($this->project->$name);
-    }
-
     public function testProjectStoreItem()
     {
         $this->project->reset();
 
         $this->project->store('Estudos de PHP');
 
-        $this->assertCount(1, $this->project->projects);
+        $projects = Storage::$data['projects'];
+
+        $this->assertCount(1, $projects);
     }
 
     public function testProjectStoreOnlyWords()

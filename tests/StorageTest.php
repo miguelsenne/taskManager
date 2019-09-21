@@ -9,7 +9,7 @@ use Faker\Factory;
 class StorageTest extends TestCase
 {
 
-    public function tearDown(): void
+    public function setUp(): void
     {
         Storage::reset();
     }
