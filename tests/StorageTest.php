@@ -125,4 +125,20 @@ class StorageTest extends TestCase
         $this->assertIsArray(Storage::$data);
         $this->assertEmpty(Storage::$data);
     }
+
+    public function testIfReturnAnCollection()
+    {
+        Storage::store('collections', ['name' => 'John Doe']);
+        $collection = Storage::findCollection('collections');
+        $this->assertCount(1, $collection);
+    }
+
+    public function testReturnAnExceptionIfTheCollectionNotExists()
+    {
+        $this->expectException('Exception');
+
+        $this->expectExceptionMessage('Collection not found');
+
+        Storage::findCollection('collections');
+    }
 }

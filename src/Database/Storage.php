@@ -85,4 +85,19 @@ class Storage
     {
         self::$data = [];
     }
+
+    /**
+     * Find and return all items from collection
+     *
+     * @param string $collection the collection
+     * @return array an array of collection
+     */
+    public function findCollection(string $collection)
+    {
+        if (!array_key_exists($collection, self::$data)) {
+            throw new \Exception("Collection not found", 1);
+        }
+
+        return self::$data[$collection];
+    }
 }
