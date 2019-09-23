@@ -141,4 +141,22 @@ class StorageTest extends TestCase
 
         Storage::findCollection('collections');
     }
+
+    public function testIfCollectionDoenstExistReturnsException()
+    {
+        $this->expectException('Exception');
+
+        $this->expectExceptionMessage('Collection not found');
+
+        Storage::checkCollection('collections');
+    }
+
+    public function testCollectionExistAndReturnTrue()
+    {
+        Storage::store('collections', ['name' => 'John Doe']);
+
+        $check_collection = Storage::checkCollection('collections');
+
+        $this->assertTrue($check_collection);
+    }
 }

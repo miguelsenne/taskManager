@@ -94,10 +94,22 @@ class Storage
      */
     public function findCollection(string $collection)
     {
+        self::checkCollection($collection);
+        return self::$data[$collection];
+    }
+
+    /**
+     * Check if exist collection
+     *
+     * @param string $collection the collection
+     * @return boolean if exists return true
+     */
+    public function checkCollection(string $collection)
+    {
         if (!array_key_exists($collection, self::$data)) {
             throw new \Exception("Collection not found", 1);
         }
 
-        return self::$data[$collection];
+        return true;
     }
 }
