@@ -7,6 +7,40 @@ use miguelsenne\TaskManager\Database\Storage;
 
 class Project
 {
+
+    public $id;
+
+    public function __construct($projectid = '')
+    {
+        $this->id = $projectid;
+    }
+
+    public function getProject()
+    {
+        return Storage::find('projects', 'id', $this->id);
+    }
+
+    /**
+     * Get project id
+     *
+     * @return string the id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set project id
+     *
+     * @param string $id the id
+     * @return string $id the id
+     */
+    public function setId(string $id)
+    {
+        return $this->id = $id;
+    }
+
     /**
      * Store an project
      * @param  string $name project name
@@ -16,19 +50,13 @@ class Project
     {
         $name = preg_replace("/[0-9\s]+$/", null, $name);
 
-        return Storage::store('projects', [
+        $project = Storage::store('projects', [
             "name" => $name
         ]);
-    }
 
-    /**
-     * Generate an ID
-     *
-     * @return string the ID
-     */
-    public function generateID()
-    {
-        return StringGenerator::randomId();
+        $this->id = $project['id'];
+
+        return $project;
     }
 
     /**
@@ -37,9 +65,9 @@ class Project
      * @param string $id the ID
      * @return array projects
      */
-    public function delete(string $id)
+    public function delete()
     {
-        Storage::delete('projects', $id);
+        Storage::delete('projects', $this->id);
 
         return Storage::$data['projects'];
     }
@@ -50,9 +78,9 @@ class Project
      * @param string $id the ID
      * @return array selected project
      */
-    public function find(string $id)
+    public function find()
     {
-        return Storage::find('projects', 'id', $id);
+        return Storage::find('projects', 'id', $this->id);
     }
 
     /**
