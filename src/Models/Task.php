@@ -25,7 +25,7 @@ class Task
         return Storage::store('tasks', [
             'projectId' => $this->project->getProject()['id'],
             'name' => $name,
-            'status' => 'In progress'
+            'status' => 'To do'
         ]);
     }
 }
