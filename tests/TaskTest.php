@@ -28,4 +28,23 @@ class TaskTest extends TestCase
         $task = $this->task->store($faker->word());
         $this->assertCount(1, Storage::findCollection('tasks'));
     }
+
+    public function testIfStatusIsChanged()
+    {
+        $faker = Factory::create();
+
+        $task = $this->task->store($faker->word());
+
+        $status = [
+            "In progress",
+            "Awaiting",
+            "Done",
+            "To do"
+        ];
+
+        for ($i = 0; $i <= 3; $i++) {
+            $task = $this->task->changeProgress($task['id']);
+            $this->assertEquals($status[$i], $task['status']);
+        }
+    }
 }
