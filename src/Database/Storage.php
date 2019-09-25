@@ -92,7 +92,7 @@ class Storage
      * @param string $collection the collection
      * @return array an array of collection
      */
-    public function findCollection(string $collection)
+    public static function findCollection(string $collection)
     {
         self::checkCollection($collection);
         return self::$data[$collection];
@@ -104,12 +104,33 @@ class Storage
      * @param string $collection the collection
      * @return boolean if exists return true
      */
-    public function checkCollection(string $collection)
+    public static function checkCollection(string $collection)
     {
         if (!array_key_exists($collection, self::$data)) {
             throw new \Exception("Collection not found", 1);
         }
 
         return true;
+    }
+
+    /**
+     * Update an item from collection
+     *
+     * @param string $collection the collection
+     * @param string $id the id
+     * @param string $key property to be changed
+     * @param mixed $value value to be changed
+     */
+    public static function update(string $collection, string $id, string $key, $value)
+    {
+        self::checkCollection($collection);
+
+        $items = self::findCollection($collection);
+
+        $itemKey = array_search($id, array_column($items, 'id'));
+
+        self::$data[$collection][$itemKey][$key] = $value;
+
+        return self::$data[$collection][$itemKey];
     }
 }

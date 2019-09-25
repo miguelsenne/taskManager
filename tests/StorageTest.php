@@ -159,4 +159,35 @@ class StorageTest extends TestCase
 
         $this->assertTrue($check_collection);
     }
+
+    public function testIfReturnsExceptionWhenDoesntExistCollection()
+    {
+        $faker = Factory::create();
+
+        $this->expectException('Exception');
+
+        Storage::update('collection', $faker->uuid(), $faker->word(), $faker->word());
+    }
+
+    public function testIfDataIsUpdated()
+    {
+        $item = Storage::store('items', ['name' => 'Miguel Senne']);
+
+        $this->assertEquals('Miguel Senne', $item['name']);
+
+        $item = Storage::update('items', $item['id'], 'name', 'Miguel');
+
+        $this->assertEquals('Miguel', $item['name']);
+    }
+
+    public function testIfUpdateAddNewKeyWhenUpdated()
+    {
+        $item = Storage::store('items', ['name' => 'Miguel Senne']);
+
+        $this->assertEquals('Miguel Senne', $item['name']);
+
+        $item = Storage::update('items', $item['id'], 'age', 25);
+
+        $this->assertEquals(25, $item['age']);
+    }
 }
