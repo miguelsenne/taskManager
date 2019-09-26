@@ -2,12 +2,6 @@
 
 cd ${TRAVIS_BUILD_DIR}
 
-if [[ $TRAVIS_PHP_VERSION = '7.2' ]]; then
-    phpunit
-    ${pwd}/vendor/bin/phpcs
-fi
+./vendor/bin/phpunit
+./vendor/bin/phpcs
 
-if [[ $TRAVIS_PHP_VERSION = '7.3' ]]; then
-    phpunit
-    ${pwd}/vendor/bin/phpcs
-fi
