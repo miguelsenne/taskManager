@@ -23,7 +23,6 @@ Getting started
 Start by `use`-ing the class and creating an instance with id project if you need access an **project**
 
 ```php
-
 use  \miguelsenne\TaskManager\Models\Project;  
 
 $Project = new Project();
@@ -33,7 +32,6 @@ $Project = new Project();
 Then, register an project
 
 ```php 
-
 $result = $Project->store('New Project');
 
 print_r($result);
@@ -43,7 +41,6 @@ print_r($result);
 Remove an project using the `delete` method:
 
 ```php 
-
 $project = new Project('5d8f83f6d1f2c9.59688033');
 
 $result = $project->delete();
@@ -55,7 +52,6 @@ print_r($result);
 Find an project using the `find` method:
 
 ```php 
-
 $project = new Project('5d8f83f6d1f2c9.59688033');
 
 $result = $project->find();
@@ -81,7 +77,6 @@ Tasks
 Start by `use`-ing the class and creating an instance with an project id
 
 ```php 
-
 use miguelsenne\TaskManager\Models\Task;
 
 $task = new Task('5d8f83f6d1f2c9.59688033');
@@ -91,7 +86,6 @@ $task = new Task('5d8f83f6d1f2c9.59688033');
 Then, register an task
 
 ```php 
-
 $result = $Project->store('New Task');
 
 print_r($result);
@@ -101,7 +95,6 @@ print_r($result);
 Change progress of the task. The task, when created, starts with **to do** progress
 
 ```php 
-
 $result = $Project->changeProgress();
 
 print_r($result);
