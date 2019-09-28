@@ -86,7 +86,7 @@ $task = new Task('5d8f83f6d1f2c9.59688033');
 Then, register an task
 
 ```php 
-$result = $Project->store('New Task');
+$result = $task->store('New Task');
 
 print_r($result);
 
@@ -95,7 +95,7 @@ print_r($result);
 Change progress of the task. The task, when created, starts with **to do** progress
 
 ```php 
-$result = $Project->changeProgress();
+$result = $task->changeProgress();
 
 print_r($result);
 
